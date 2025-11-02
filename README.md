@@ -147,7 +147,7 @@ full_info_of_authors_new/{YYYY}_from_slice/career11_hindex_summary.json
 > runs\lstm_windows\pre_h_index\..
 runs\lstm_windows\metrics_eval_0-10.jsonl
 
-![输入图片说明](/imgs/2025-10-31/5KA0Qq4GMwMQboXV.png)
+![输入图片说明](/imgs/RMSE.png)
 
 ## 16.h-index的命中率
 ### 程序
@@ -186,11 +186,5 @@ runs\lstm_windows\metrics_eval_0-10.jsonl
 
 
 
-
-
-**功能**：统计这些学者的基础统计学数据
-
-**结果**：
-- metrics_1998_2009/..
 
 
