@@ -162,8 +162,8 @@ runs\lstm_windows\metrics_eval_0-10.jsonl
 > runs\lstm_windows\match_pred_vs_real\..
 其中summary为统计的最终结果，其他为具体人员名单
 
-![输入图片说明](/imgs/2025-10-31/ICuPAiCniWq3f4f5.png)
-![输入图片说明](/imgs/2025-10-31/LEIJdsxlkcogQN0D.png)
+![输入图片说明](/imgs/plot_top1_precision.png)
+![输入图片说明](/imgs/plot_top10_precision.png)
 
 <font color="red">**结论： 存在W=6/7的饱和点**</font>
 
