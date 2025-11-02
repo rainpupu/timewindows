@@ -147,7 +147,7 @@ full_info_of_authors_new/{YYYY}_from_slice/career11_hindex_summary.json
 > runs\lstm_windows\pre_h_index\..
 runs\lstm_windows\metrics_eval_0-10.jsonl
 
-
+![输入图片说明](/imgs/2025-10-31/5KA0Qq4GMwMQboXV.png)
 
 ## 16.h-index的命中率
 ### 程序
@@ -162,7 +162,35 @@ runs\lstm_windows\metrics_eval_0-10.jsonl
 > runs\lstm_windows\match_pred_vs_real\..
 其中summary为统计的最终结果，其他为具体人员名单
 
-
+![输入图片说明](/imgs/2025-10-31/ICuPAiCniWq3f4f5.png)
+![输入图片说明](/imgs/2025-10-31/LEIJdsxlkcogQN0D.png)
 
 <font color="red">**结论： 存在W=6/7的饱和点**</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+**功能**：统计这些学者的基础统计学数据
+
+**结果**：
+- metrics_1998_2009/..
+
 
