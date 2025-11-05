@@ -81,21 +81,21 @@ dblp_out/author_ids_1998_2012.parquet
 ### 具体特征
 | name | 含义 |
 |--|--|
-| author_id |  |
-| start_year |  |
-| year |  |
-|n_papers||
-| n_papers_cum |  |
-| first_author_share |  |
-| avg_team_size |  |
-| single_author_share |  |
-| venues_dedup_year |  |
-| unique_coauthors_year |  |
-| new_coauthors_year |  |
-| cum_unique_coauthors |  |
-| repeat_collab_ratio |  |
-| top_first |  |
-| mid_first |  |
+| author_id | 作者id |
+| start_year | 入行年份 |
+| year | 当前年份 |
+|n_papers|当年发表论文数|
+| n_papers_cum | 从入行年起累计到当年的论文总数 |
+| first_author_share | 当年“一作论文数 / 当年论文总数”的占比 |
+| avg_team_size | 当年每篇论文的作者数的平均值 |
+| single_author_share | 当年“单作者论文数 / 当年论文总数”的占比 |
+| venues_dedup_year | 当年去重后的发表 venue 数 |
+| unique_coauthors_year | 当年合作过的唯一合作者人数 |
+| new_coauthors_year | 当年第一次出现的新合作者人数。 |
+| cum_unique_coauthors | 从入行起累计的唯一合作者人数 |
+| repeat_collab_ratio | 当年“与既有合作者的合作次数 / 当年全部合作次数”的比例 |
+| top_first | 当年顶会/顶刊的一作篇数 |
+| mid_first | 当年“中顶”层级的一作篇数 |
 
 ## 10.统计所有学者截止入行第11年每年累计引文数
 ### 程序
