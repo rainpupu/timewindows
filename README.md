@@ -153,8 +153,8 @@ runs\lstm_windows\metrics_eval_0-10.jsonl
 ![输入图片说明](/imgs/plot_val_Spearman_W0-10.png)
 ![输入图片说明](/imgs/plot_test_Spearman_W0-10.png)
 
-**Spearmen：**
-**RMSE:**
+**Spearmen：**只看排序是否一致的相关系数（-1～1）。越接近 1，说明模型把“谁更高谁更低”排得越准；对单调变换（如 log/exp）不敏感。
+**RMSE:**预测值和真值的数值差的均方根（单位=目标本身的单位）。这里就是“平均偏差多少个 h 指数点”。越小越好，对离群误差更敏感。
 ## 16.h-index的命中率
 ### 程序
 `compare_top1_and_10.py`
