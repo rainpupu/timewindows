@@ -152,6 +152,9 @@ runs\lstm_windows\metrics_eval_0-10.jsonl
 ![输入图片说明](/imgs/RMSE.png)
 ![输入图片说明](/imgs/plot_val_Spearman_W0-10.png)
 ![输入图片说明](/imgs/plot_test_Spearman_W0-10.png)
+
+**Spearmen：**
+**RMSE:**
 ## 16.h-index的命中率
 ### 程序
 `compare_top1_and_10.py`
