@@ -1,5 +1,7 @@
 # 项目名称
 TIMEWINDOW
+# 项目目的
+系统评估“早期窗口长度 W 对长期学术影响预测的效能”，寻找最优窗口，并识别跨窗口稳定的早期特征。
 # 研究问题
 **RQ1：预测性能随 W 如何变化，是否存在拐点/饱和点？**
 
@@ -15,9 +17,14 @@ TIMEWINDOW
 **稳定特征评估框架**：SHAP 重要性随 W的变异系数/排名稳定性
 
 **MIG 边际信息增益**：MIG(W)=Perf(W)−Perf(W−1)，量化“多等一年是否值得”
+# “长期学术影响”的操作化定义
+主定义：h@11（作者级）：对集合 P 的时间限定引用分布计算 h 指数，记为 h@11，作为本研究的长期影响标签。
 
+Top-1%@11：依据同入行队列的 h@11 分布取 99 分位阈值，定义是否进入前 1%（二分类标签）。
+
+Top-10%@11：依据同入行队列的 h@11 分布取 90 分位阈值，定义是否进入前 10%（二分类标签）。
 # 实验步骤
-
+## RQ1
 ## 1. 对DBLP数据集按年份切片
 
 **程序：**`mini_cut_by_year.py` 
@@ -154,6 +161,7 @@ runs\lstm_windows\metrics_eval_0-10.jsonl
 ![输入图片说明](/imgs/plot_test_Spearman_W0-10.png)
 
 **Spearmen：** 只看排序是否一致的相关系数（-1～1）。越接近 1，说明模型把“谁更高谁更低”排得越准；对单调变换（如 log/exp）不敏感。
+
 **RMSE:** 预测值和真值的数值差的均方根（单位=目标本身的单位）。这里就是“平均偏差多少个 h 指数点”。越小越好，对离群误差更敏感。
 ## 16.h-index的命中率
 ### 程序
@@ -171,20 +179,63 @@ runs\lstm_windows\metrics_eval_0-10.jsonl
 ![输入图片说明](/imgs/plot_top1_precision.png)
 ![输入图片说明](/imgs/plot_top10_precision.png)
 
-<font color="red">**结论： 存在W=6/7的饱和点**</font>
+<font color="red">**结论： 存在W=4/5的饱和点**</font>
 
+## RQ2
+条件扰动（Conditional Perturbation Importance, CPI）:不把数据随机打乱，而是在保持组外特征不变的条件下，只“拿走”这组特征的独立信息，观察验证集损失涨了多少。
 
+**组别重要性：**
+$$
+\mathrm{imp}(G)
+= \frac{1}{B}\sum_{b=1}^{B}
+\Big[
+\mathcal{L}!\big(y,\ f(X^{(b)}_{\setminus G})\big)
 
+* \mathcal{L}!\big(y,\ f(X)\big)
+  \Big]
+  $$
 
+**标准误：**
+$$
+\mathrm{se}(G)
+= \frac{\operatorname{std}!\left(\Delta_1,\ldots,\Delta_B\right)}{\sqrt{B}},
+\quad
+\Delta_b
+= \mathcal{L}!\big(y,\ f(X^{(b)}_{\setminus G})\big)
 
+* \mathcal{L}!\big(y,\ f(X)\big)
+  $$
 
+**归一化占比（用于可视化对比）：**
+$$
+\mathrm{imp_norm}(G)
+====================
 
+\frac{\max!\big(0,\ \mathrm{imp}(G)\big)}
+{\sum\limits_{H}\max!\big(0,\ \mathrm{imp}(H)\big)}
+$$
 
+### 条件扰动的构造（仅替换组内列）
 
+令第 (i) 个样本的序列长度为 (L_i)，组 (G) 的列索引集合为 (\mathcal{C}*G)。第 (b) 次扰动样本 (i) 的“条件近邻”记为 (j=i_b)（在**条件特征子空间**内用 kNN 选出，且 (j\neq i)）。定义扰动后的张量：
+$$
+X^{(b)}*{\setminus G}[i, t, c]
+==============================
 
+\begin{cases}
+X[j,\ \min(t,\ L_j-1),\ c], & c\in \mathcal{C}_G,\ \ 0\le t < L_i \\
+X[i,\ t,\ c], & \text{otherwise}
+\end{cases}
+$$
 
+* **条件子空间**：当前组 (G) 的**组外列**（保持相关结构不被破坏）。
+* **时间对齐**：若近邻序列更短，使用其最后一步 (\min(t, L_j-1))。
+* **模型与损失**：(f(\cdot)) 为已训练好的模型；(\mathcal{L}) 可取 MSE/MAE/ (1-)Spearman 等。
+* **基线**：(\mathcal{L}!\big(y,\ f(X)\big)) 先计算一次，复用于所有扰动。
 
+> 解释：(\mathrm{imp}(G)) 衡量“在保持组外信息不变的**条件**下，拿走组 (G) 的独立信息会让损失上升多少”。值越大，说明该组越关键。
 
+具体解释+论文在readme_rq2_cpi.md
 
 
 
