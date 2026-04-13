@@ -181,39 +181,7 @@ runs\lstm_windows\metrics_eval_0-10.jsonl
 
 <font color="red">**结论： 存在W=4/5的饱和点**</font>
 
-## RQ2
-条件扰动（Conditional Perturbation Importance, CPI）:不把数据随机打乱，而是在保持组外特征不变的条件下，只“拿走”这组特征的独立信息，观察验证集损失涨了多少。
 
-**组别重要性：**
-$$
-\mathrm{imp}(G)
-= \frac{1}{B}\sum_{b=1}^{B}
-\Big[
-\mathcal{L}!\big(y,\ f(X^{(b)}_{\setminus G})\big)
-
-* \mathcal{L}!\big(y,\ f(X)\big)
-  \Big]
-  $$
-
-**标准误：**
-$$
-\mathrm{se}(G)
-= \frac{\operatorname{std}!\left(\Delta_1,\ldots,\Delta_B\right)}{\sqrt{B}},
-\quad
-\Delta_b
-= \mathcal{L}!\big(y,\ f(X^{(b)}_{\setminus G})\big)
-
-* \mathcal{L}!\big(y,\ f(X)\big)
-  $$
-
-**归一化占比（用于可视化对比）：**
-$$
-\mathrm{imp_norm}(G)
-====================
-
-\frac{\max!\big(0,\ \mathrm{imp}(G)\big)}
-{\sum\limits_{H}\max!\big(0,\ \mathrm{imp}(H)\big)}
-$$
 
 
 
