@@ -184,6 +184,177 @@ runs\lstm_windows\metrics_eval_0-10.jsonl
 
 
 
+## 🔍 背景（Background）
+
+在人才评估、科研资助与学术政策制定中，**对早期科研人员未来发展的预测**正变得越来越重要。  
+现有研究大多聚焦于**特征设计（feature engineering）**与**模型优化（model design）**，但通常默认一个固定的观测窗口（observation window）。
+
+然而，一个更基础的问题长期被忽略：
+
+> **应该观察一个科研人员多久，才能做出可靠判断？**
+
+更长的窗口意味着更高的预测准确性，但也会延迟决策；更短的窗口则有助于早期干预，但可能信息不足。
+
+为此，本项目将**Early Observation Window（W）** 从经验设定提升为核心研究变量，系统研究其对预测性能的影响，并寻找：
+
+> **最优观测窗口（Optimal Window, OW）**
+
+---
+
+## ⚙️ 实验流程（Experimental Pipeline）
+
+整体流程遵循：
+
+> **Data → Feature → Graph → Sequence → Evaluation**
+
+---
+
+### 1️⃣ 数据构建（Data Construction）
+
+- 数据来源：DBLP（计算机科学领域）
+- 入行 cohort：1998–2009
+- 年度切片 + 清洗（去除 preprint，保证时间一致性）
+
+---
+
+### 2️⃣ 特征工程（Feature Engineering）
+
+构建三类早期学术行为特征：
+
+- **生产力（Productivity）**  
+  - 年发文数、累计发文量
+
+- **合作结构（Collaboration）**  
+  - 合作者数量、团队规模、新合作关系
+
+- **研究质量（Research Quality）**  
+  - 顶会/顶刊一作（Top-tier / Mid-tier）
+
+---
+
+### 3️⃣ 图建模（GCN）
+
+- 构建年度合著网络（co-authorship network）
+- 使用 **Graph Convolutional Network (GCN)** 提取结构表示
+
+👉 捕捉学者的**合作位置与社会结构信息（social capital）**
+
+---
+
+### 4️⃣ 时序建模（LSTM）
+
+- 输入：
+  - 图嵌入（graph embeddings）
+  - 行为特征序列（temporal features）
+- 模型：
+  - **LSTM + MLP**
+- 预测目标：
+  - 入行第11年的 **h-index（h@11）**
+
+---
+
+### 5️⃣ 多窗口训练（Multi-window Training）
+
+设定不同观测窗口：
+
+\[
+W = 1 \sim 10
+\]
+
+- 每个 \( W \) 独立训练模型
+- 对比不同窗口下预测性能
+
+👉 核心思想：
+
+> **固定模型，改变问题定义**
+
+---
+
+### 6️⃣ 评估指标（Evaluation）
+
+- **Spearman**：排序一致性（ranking consistency）  
+- **RMSE**：数值误差（prediction error）  
+- **Hit@Top-1% / Top-10%**：顶尖人才识别能力  
+
+---
+
+## 📊 结果与可视化分析（Results & Visualization）
+
+---
+
+### 🔹 预测性能随窗口变化
+
+- 性能在 **W=1 → W≈4** 快速提升  
+- 在 **W≥5** 后逐渐趋于饱和  
+- 后续增长呈明显边际递减  
+
+![Spearman Curve](/imgs/plot_val_Spearman_W0-10.png)
+
+---
+
+### 🔹 边际信息增益（MIG）
+
+\[
+\text{MIG}(W) = \text{Perf}(W) - \text{Perf}(W-1)
+\]
+
+- 在 **W=2–5** 区间保持较高  
+- 在 **W≥6** 后迅速下降  
+
+👉 表明：
+
+> **绝大多数有效信息集中在前 4–5 年**
+
+---
+
+### 🔹 顶尖学者识别能力
+
+- Hit@1%、Hit@10% 随 \( W \) 提升  
+- 后期同样出现平台期（plateau）
+
+![Top1 Precision](/imgs/plot_top1_precision.png)
+
+---
+
+### 🔹 核心结论
+
+> **存在稳定的最优观测窗口：W ≈ 4–5 年**
+
+- 过短：信息不足  
+- 过长：收益有限  
+
+---
+
+## 📌 机制洞察（Insights）
+
+随着观测窗口增长，模型依赖的信息发生阶段性变化：
+
+- **早期（W ≤ 3）**  
+  → 生产力 + 合作扩张（起步速度）
+
+- **中期（W = 4–6）**  
+  → 生产力 / 合作 / 质量三者均衡
+
+- **后期（W ≥ 7）**  
+  → 累计产出 + 稳定合作结构
+
+---
+
+## 🚀 项目价值（Takeaway）
+
+本项目的核心贡献不在于模型本身，而在于：
+
+> **将 Observation Window 从经验设定转化为可优化变量**
+
+从而回答一个更关键的问题：
+
+> **什么时候可以做出可靠的预测？（When to decide）**
+
+该结论可为以下场景提供量化依据：
+
+- 青年人才评估  
+- 科研资助决策  
+- 学术发展预测  
 
 
 
