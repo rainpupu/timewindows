@@ -36,11 +36,10 @@
 ---
 
 ## ✨ 核心思路（Core Idea）
-> ```md
 > <p align="center">
 >   <img src="./imgs/framework.png" alt="Framework" width="760"/>
 > </p>
-> ```
+
 ---
 
 ## ⚙️ 实验流程（Pipeline）
