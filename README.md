@@ -38,7 +38,7 @@
 ## ✨ 核心思路（Core Idea）
 > ```md
 > <p align="center">
->   <img src="./images/framework.png" alt="Framework" width="760"/>
+>   <img src="./imgs/framework.png" alt="Framework" width="760"/>
 > </p>
 > ```
 ---
@@ -170,7 +170,7 @@
 ## 📊 结果（Results）
 
 <p align="center">
-  <img src="./images/resultes.png" alt="Observation window results" width="900"/>
+  <img src="./imgs/results.png" alt="Observation window results" width="900"/>
 </p>
 
 **整体趋势。** 随着 observation window 从 1 年逐步扩展到 10 年，模型的预测性能整体持续提升，但增长速度并不均匀：前 4 年提升最为显著，之后增益逐渐减弱并趋于平台。
